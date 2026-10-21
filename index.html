@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="通过模型输出的数字偏好，比较模型家族与版本。基于 ModelTrace 的浏览器模型识别工具，回答仅在本机处理。">
+  <title>ModelID · 模型识别平台</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%231e6455'/%3E%3Cpath d='M16 41V23l16 14 16-14v18M24 19l8 7 8-7' stroke='%23fff' stroke-width='4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-scan" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m13-5h3a2 2 0 0 1 2 2v3M3 16v3a2 2 0 0 0 2 2h3m8 0h3a2 2 0 0 0 2-2v-3M7 9h10M7 12h10M7 15h6"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M6 7a7 7 0 0 1 12-1l2 3M4 15l2 3a7 7 0 0 0 12-1"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7v.1"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M14 3h7v7m0-7L10 14M11 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+    <symbol id="i-fingerprint" viewBox="0 0 80 80"><path d="M15 36C15 5 65 5 65 36v12M23 47V36c0-23 34-23 34 0v17c0 8-3 15-7 21M31 58V36c0-12 18-12 18 0v16c0 9-3 17-8 24M40 35v20c0 8-2 14-5 19M15 45v9M23 57v8M65 56l-2 9"/></symbol>
+  </svg>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <aside class="sidebar">
+    <a class="brand" href="#identify" aria-label="ModelID 首页"><span class="brand-mark">M<span>ı</span></span><span>ModelID<small>模型识别平台</small></span></a>
+    <p class="nav-caption">识别工具</p>
+    <nav aria-label="主导航">
+      <a href="#identify" class="nav-item active" data-page="identify" aria-current="page"><svg class="icon"><use href="#i-scan"/></svg>模型识别</a>
+      
+      
+    </nav>
+    <div class="sidebar-bottom"><button class="nav-item help-button" type="button" data-help><svg class="icon"><use href="#i-info"/></svg>使用说明</button><div class="sidebar-note"><span class="status-dot"></span>浏览器模型识别<small>回答仅在你的浏览器中处理。</small></div></div>
+  </aside>
+  <div class="shell">
+    <header class="topbar"><div class="breadcrumb">ModelID<span>/</span><strong id="breadcrumb-title">模型识别</strong></div><div class="local-state"><span class="status-dot"></span><span id="connection-state">正在加载指纹库</span></div></header>
+    <main id="main" tabindex="-1">
+      <section id="page-identify" class="page">
+        <div class="page-heading"><div><div class="eyebrow">MODEL IDENTIFICATION</div><h1>认出模型的数字偏好<span class="heading-dot">.</span></h1><p>让模型完成三次数值选择，再与已收录的指纹比较。</p></div><button class="button secondary" type="button" data-help><svg class="icon"><use href="#i-info"/></svg>如何识别</button></div>
+        <section class="overview" aria-label="指纹库概况"><div class="overview-intro"><span class="mini-label">当前指纹库</span><p>从回答，找到最接近的模型。</p></div><div class="overview-stats"><div><strong data-stat="model_count">19</strong><span>个候选模型</span></div><div><strong data-stat="response_count">684</strong><span>份参考回答</span></div><div><strong data-stat="family_count">2</strong><span>个模型家族</span></div></div></section>
+        <div class="identify-layout">
+          <section class="workspace-card">
+            <div class="card-heading"><div class="section-title"><span class="step-square">01</span><h2>获取模型回答</h2></div><span class="neutral-badge">浏览器本地计算</span></div>
+            <div id="manual-panel"><div class="workspace-hint"><p>将每条题目分别发给同一个模型，使用独立对话，并保留完整回答。</p><button class="text-button" id="refresh-challenges" type="button" disabled><svg class="icon"><use href="#i-refresh"/></svg>换一组题目</button></div><div id="challenge-list" class="challenge-list"><p class="loading-copy">正在生成题目…</p></div><div class="workspace-footer"><span id="filled-count">已填写 0 / 3 份回答</span><button type="button" id="analyze" class="button primary" disabled>开始识别<svg class="icon"><use href="#i-arrow"/></svg></button></div></div>
+            <p id="test-error" class="message error" role="alert" hidden></p>
+          </section>
+          <aside class="results-column"><section id="result-card" class="result-card" aria-live="polite"><div class="card-heading"><div class="section-title"><span class="step-square muted">02</span><h2>识别结果</h2></div><span class="neutral-badge">等待回答</span></div><div class="result-empty"><div class="fingerprint-art"><svg><use href="#i-fingerprint"/></svg></div><h3>等待你的模型回答</h3><p>提交回答后，在这里查看<br>最相近的模型和候选排名。</p><div class="empty-steps"><span>收集回答</span><span>提取特征</span><span>比较指纹</span></div></div></section><div class="interpretation"><svg class="icon"><use href="#i-info"/></svg><div><strong>结果应该怎样理解？</strong><p>分数表示已收录模型之间的相对可能性。未收录模型仍会被匹配到某个候选。GPT‑6.1 Codex 与 gpt-6-astra 存在混淆，结果不能单独证明模型身份。</p></div></div></aside>
+        </div>
+      </section>
+      <footer class="page-footer"><span>ModelID <span class="footer-divider">/</span> 浏览器模型识别工具</span><a href="https://github.com/xqy2006/ModelTrace" target="_blank" rel="noreferrer">基于 ModelTrace<svg class="icon"><use href="#i-link"/></svg></a></footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <dialog id="help-dialog"><div class="dialog-heading"><h2>开始一次模型识别</h2><button id="close-help" class="icon-button" type="button" aria-label="关闭使用说明">×</button></div><p>ModelID 比较模型自行选择数字时表现出的偏好。它能帮助你判断回答更接近哪个已收录模型，但无法独立证明接口实际使用的模型。</p><ol><li><strong>复制题目。</strong>在“手动粘贴”中，分别复制三条题目。</li><li><strong>向同一个模型提问。</strong>每题使用独立对话，不让模型调用代码、计算器或其他随机数工具。</li><li><strong>粘贴完整回答并识别。</strong>保留原始格式，不排序、不去重，也不补齐缺失数字。</li></ol><p>计算在你的浏览器中完成，粘贴的回答不会发送到服务器；本页面不要求提供 API Key。</p><div class="dialog-note">尚未收录的模型也会得到候选排名。GPT‑6.1 Codex 指纹与 gpt-6-astra 仍有混淆，请结合其他证据判断。</div><button class="button primary" id="help-done" type="button">开始使用<svg class="icon"><use href="#i-arrow"/></svg></button></dialog>
+</body>
+</html>
