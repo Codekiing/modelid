@@ -16,3 +16,4 @@
 input::placeholder,textarea::placeholder{color:#7a8780}.rank-name,td{color:#617667}
 .result-empty p,.probability-caption,.result-diagnostics,.table-footer,.collection-footnote{color:#728278}
 @media(max-width:680px){.card-heading{flex-wrap:wrap}.workspace-hint{flex-wrap:wrap}.challenge-heading{flex-wrap:wrap;gap:7px}.overview-intro{flex-wrap:wrap;gap:5px}.overview-stats>div{padding-left:15px;padding-right:15px}.page-heading{align-items:flex-start}.page-heading>.button{font-size:11px}.segmented button{font-size:12px}.table-footer{font-size:11px}}
+.result-caution{margin:18px 0 22px;padding:14px 16px;border:1px solid #eadfc9;border-radius:8px;background:#faf6ed;color:#715d3f;font-size:14px;line-height:1.9}

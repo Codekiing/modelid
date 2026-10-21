@@ -53,11 +53,15 @@ function rankRows(items) {
 
 function renderResult(data) {
   const winner = data.results[0];
+  // Internal held-out groups show errors in both directions for this pair.
+  // Abstain from a single-model conclusion; keep the original scores and order.
+  const confusedPair = new Set(["gpt-6-astra", "gpt-6.1-sol-codex-medium"]);
+  const unresolved = data.results.length >= 2 && data.results.slice(0, 2).every((item) => confusedPair.has(item.model));
   const diagnostics = data.diagnostics.map((item, index) => `回答 ${index + 1}：${item.parsed_numbers} 个有效数字${item.accepted ? "" : "（未计入）"}`).join("<br>");
   $("result-card").innerHTML = `<div class="card-heading"><div class="section-title"><span class="step-square">02</span><h2>识别结果</h2></div><span class="neutral-badge">已比较 ${data.results.length} 个模型</span></div>
-    <div class="result-body"><p class="result-kicker">最接近的已收录模型</p><h3 class="winner-name">${escapeHtml(winner.display_name)}</h3>
+    <div class="result-body"><p class="result-kicker">${unresolved ? "现有指纹存在混淆" : "最接近的已收录模型"}</p><h3 class="winner-name">${unresolved ? "暂时无法可靠区分" : escapeHtml(winner.display_name)}</h3>
       <div class="winner-line"><span class="family-badge">${escapeHtml(winner.family_name)}</span><span>基于 ${data.used_outputs} 份有效回答</span></div>
-      <div class="winner-probability">${(winner.probability * 100).toFixed(1)}<span>%</span></div><p class="probability-caption">当前候选库内的相对概率</p>
+      ${unresolved ? `<p class="result-caution">GPT‑6.1 Sol（Codex，中等推理）与 GPT‑6 Astra 在已有检查中会互相误判，本次不能确认具体型号。下方保留原始候选排名，分数不是识别正确率。</p>` : `<div class="winner-probability">${(winner.probability * 100).toFixed(1)}<span>%</span></div><p class="probability-caption">候选之间的相对分数，不是识别正确率</p>`}
       <div class="rank-list"><p class="rank-title">候选模型排名</p>${rankRows(data.results.slice(0, 3))}</div>
       ${data.results.length > 3 ? `<details class="all-candidates"><summary>查看其余 ${data.results.length - 3} 个候选</summary>${rankRows(data.results.slice(3))}</details>` : ""}
       <div class="result-diagnostics">${diagnostics}</div>
